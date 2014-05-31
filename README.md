@@ -3,11 +3,6 @@ PyclassicS
 
 PyclassicS is an open-source classic snake game written with Pygame.
 
-Version
-=======
-
-1.1
-
 Improvements to be made
 ========================
 
@@ -17,6 +12,11 @@ Improvements to be made
 - Choice between procedurally generated walls/levels or empty space.
 - Two-Player option.
 - Anything that might be interesting.
+
+Version
+=======
+
+1.1
 
 License
 =======
