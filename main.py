@@ -79,14 +79,10 @@ class Snake():
 
     def draw(self):
 
-        for tail in self.length:
-            try:
-                pygame.draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(tail[0]),
-                    self.gridKeys.get(tail[1]),self.size,self.size))
-            except:
-                pass
+        map(lambda tail: pygame.draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(tail[0]),
+            self.gridKeys.get(tail[1]),self.size,self.size)),[tail for tail in self.length])
 
-    def default(self):
+    def default(self): # Defaults the whole game when Death comes.
 
         global score
         del self.length[:]
@@ -94,19 +90,14 @@ class Snake():
         score = 0
         print "GAME OVER!\n"*100
 
-    def move(self):
+    def giveLife(self): # An abstract method that makes the snake the snake.
 
         global score
         self.length.pop()
         next = self.length[0]
         pygame.draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(self.food.pos[0]),
             self.gridKeys.get(self.food.pos[1]),self.size,self.size))
-        for tail in self.length:
-            try:
-                pygame.draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(tail[0]),
-                    self.gridKeys.get(tail[1]),self.size,self.size))
-            except:
-                pass
+        self.draw()
         print "Positions: " + str(self.length)
         if self.dir == "NORTH":
             next = (next[0],next[1]-1)
@@ -197,7 +188,7 @@ while not done:
 
     if pause == False:
         try:
-            snake.move()
+            snake.giveLife()
         except:
             if bounds == True:
                 snake.length = [[24, 24],[24, 23]]
