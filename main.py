@@ -30,17 +30,17 @@ YOUTUBE CHANNEL: http://www.youtube.com/user/poisonewein
 
 __author__ = 'EricsonWillians'
 
-from pygame import *
-from random import *
+import pygame
+from random import randrange
 
-init()
-clock = time.Clock()
+pygame.init()
+clock = pygame.time.Clock()
 screenSize = 768
-screen = display.set_mode((screenSize,screenSize))
-display.set_caption("PyclassicS 1.1")
+screen = pygame.display.set_mode((screenSize,screenSize))
+pygame.display.set_caption("PyclassicS 1.1")
 fullscreen = False
-gameFont = font.SysFont("helvetica", 16, True)
-creditFont = font.SysFont("helvetica", 10, True)
+gameFont = pygame.font.SysFont("helvetica", 16, True)
+creditFont = pygame.font.SysFont("helvetica", 10, True)
 done = False
 pause = False
 bounds = True # Enable "death" when outside the screen's boundaries.
@@ -81,7 +81,7 @@ class Snake():
 
         for tail in self.length:
             try:
-                draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(tail[0]),
+                pygame.draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(tail[0]),
                     self.gridKeys.get(tail[1]),self.size,self.size))
             except:
                 pass
@@ -99,11 +99,11 @@ class Snake():
         global score
         self.length.pop()
         next = self.length[0]
-        draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(self.food.pos[0]),
+        pygame.draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(self.food.pos[0]),
             self.gridKeys.get(self.food.pos[1]),self.size,self.size))
         for tail in self.length:
             try:
-                draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(tail[0]),
+                pygame.draw.rect(screen,colors.get("GAME"),(self.gridKeys.get(tail[0]),
                     self.gridKeys.get(tail[1]),self.size,self.size))
             except:
                 pass
@@ -153,47 +153,47 @@ class Snake():
 snake = Snake(Food())
 
 def keyPressed(inputKey):
-    keysPressed = key.get_pressed()
+    keysPressed = pygame.key.get_pressed()
     if keysPressed[inputKey]:
         return True
     else:
         return False
 
 while not done:
-    for e in event.get():
-        if e.type == QUIT or keyPressed(K_ESCAPE):
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT or keyPressed(pygame.K_ESCAPE):
             done = True
-        if keyPressed(K_p) and pause == False:
+        if keyPressed(pygame.K_p) and pause == False:
             pause = True
             print "Paused Game."
-        elif keyPressed(K_p) and pause == True:
+        elif keyPressed(pygame.K_p) and pause == True:
             pause = False
             print "Game resumed..."
-        if keyPressed(K_F10):
-            screen = display.set_mode((screenSize,screenSize),FULLSCREEN)
+        if keyPressed(pygame.K_F10):
+            screen = pygame.display.set_mode((screenSize,screenSize),pygame.FULLSCREEN)
             fullscreen = True
-        if keyPressed(K_F11):
-            screen = display.set_mode((screenSize, screenSize))
+        if keyPressed(pygame.K_F11):
+            screen = pygame.display.set_mode((screenSize, screenSize))
             fullScreen = False
 
-        if keyPressed(K_UP) or keyPressed(K_w):
+        if keyPressed(pygame.K_UP) or keyPressed(pygame.K_w):
             snake.dir = directions[0]
-        if keyPressed(K_DOWN) or keyPressed(K_s):
+        if keyPressed(pygame.K_DOWN) or keyPressed(pygame.K_s):
             snake.dir = directions[1]
-        if keyPressed(K_LEFT) or keyPressed(K_a):
+        if keyPressed(pygame.K_LEFT) or keyPressed(pygame.K_a):
             snake.dir = directions[2]
-        if keyPressed(K_RIGHT) or keyPressed(K_d):
+        if keyPressed(pygame.K_RIGHT) or keyPressed(pygame.K_d):
             snake.dir = directions[3]
-        if keyPressed(K_KP_MINUS):
+        if keyPressed(pygame.K_KP_MINUS):
             snake.speed /= 2
-        if keyPressed(K_KP_PLUS):
+        if keyPressed(pygame.K_KP_PLUS):
             snake.speed *= 2
-        if (keyPressed(K_b) and (bounds == True)):
+        if (keyPressed(pygame.K_b) and (bounds == True)):
             bounds = False
-        elif (keyPressed(K_b) and (bounds == False)):
+        elif (keyPressed(pygame.K_b) and (bounds == False)):
             bounds = True
 
-    draw.rect(screen,colors.get("BG"),(0,0,screenSize,screenSize))
+    pygame.draw.rect(screen,colors.get("BG"),(0,0,screenSize,screenSize))
 
     if pause == False:
         try:
@@ -226,9 +226,8 @@ while not done:
     screen.blit(speedText,(10,30))
     screen.blit(keysText,(10,750))
     screen.blit(creditText,(620,750))
-    display.update()
-    display.flip()
+    pygame.display.flip()
     clock.tick(snake.speed)
 
 print "Exiting..."
-quit()
+pygame.quit()
