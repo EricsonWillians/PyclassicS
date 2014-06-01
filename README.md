@@ -3,7 +3,7 @@ PyclassicS
 
 Python Classic Snake is an open-source snake game written with Pygame.
 
-Improvements to be made
+Improvements yet to be made
 ========================
 
 - A basic GUI.
