@@ -27,16 +27,16 @@ AS A COMPOSER: http://www.youtube.com/user/poisonewein
 ====================================================================
 """
 
-import g
+import _global
 from random import randrange
 
 class Food():
 
     def __init__(self):
 
-        self.pos = [randrange(0,48),randrange(0,48)]
+        self.pos = [randrange(0, 48), randrange(0, 48)]
 
     def respawn(self):
 
-        self.pos[0] = randrange(0,48)
-        self.pos[1] = randrange(0,48)
+        self.pos[0] = randrange(0, 48)
+        self.pos[1] = randrange(0, 48)

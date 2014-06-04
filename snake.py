@@ -27,73 +27,99 @@ AS A COMPOSER: http://www.youtube.com/user/poisonewein
 ====================================================================
 """
 
-import g
+import _global
 import pygame
 
 class Snake():
 
-    def __init__(self,food):
+    def __init__(self, food):
 
         self.speed = 16
         self.size = 16
-        self.dir = g.directions[0]
-        self.gridIndex = []
-        self.realPos = []
-        for i in range(0,48):
-            self.gridIndex.append(i)
-            self.realPos.append(i*16)
-        self.gridKeys = dict(zip(self.gridIndex,self.realPos))
-        self.length = [[24,24],[24,23]]
+        self.dir = _global.directions[0]
+        self.grid_index = []
+        self.real_pos = []
+        for i in range(0, 48):
+            self.grid_index.append(i)
+            self.real_pos.append(i*16)
+        self.grid_keys = dict(zip(self.grid_index,self.real_pos))
+        self.length = [
+                      [24, 24],
+                      [24, 23],
+        ]
 
         self.food = food
 
     def draw(self):
 
-        map(lambda tail: pygame.draw.rect(g.screen,g.colors.get("GAME"),(self.gridKeys.get(tail[0]),
-            self.gridKeys.get(tail[1]),self.size,self.size)),[tail for tail in self.length])
+        map(lambda tail: pygame.draw.rect(
+                _global.screen,
+                _global.colors.get("GAME"),
+                (self.grid_keys.get(tail[0]),
+                self.grid_keys.get(tail[1]),
+                self.size,self.size)),
+            [tail for tail in self.length])
 
-    def default(self): # Defaults the whole game when Death comes.
+    # Defaults the whole game when Death comes.
+    def default(self):
 
         del self.length[:]
         self.food.respawn()
-        g.score = 0
+        _global.score = 0
         print "GAME OVER!\n"*100
 
-    def giveLife(self): # An abstract method that makes the snake the snake.
+    # An abstract method that makes the snake the snake.
+    def give_life(self):
 
-        global score
         self.length.pop()
         next = self.length[0]
-        pygame.draw.rect(g.screen,g.colors.get("GAME"),(self.gridKeys.get(self.food.pos[0]),
-            self.gridKeys.get(self.food.pos[1]),self.size,self.size))
+
+        pygame.draw.rect(
+                _globalscreen,
+                _globalcolors.get("GAME"),
+            (self.grid_keys.get(self.food.pos[0]),
+            self.grid_keys.get(self.food.pos[1]),self.size,self.size))
+
         self.draw()
         print "Positions: " + str(self.length)
+
         if self.dir == "NORTH":
-            next = (next[0],next[1]-1)
-            if ((next[0] == self.food.pos[0]) and (next[1] == self.food.pos[1])):
-                self.length.append((self.length[len(self.length)-1][0],self.length[len(self.length)-1][1]-1))
+            next = (next[0], next[1]-1)
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0],
+                    self.length[len(self.length)-1][1]-1))
                 self.food.respawn()
-                g.score += 1
+                _globalscore += 1
+
         elif self.dir == "SOUTH":
             next = (next[0],next[1]+1)
-            if ((next[0] == self.food.pos[0]) and (next[1] == self.food.pos[1])):
-                self.length.append((self.length[len(self.length)-1][0],self.length[len(self.length)-1][1]+1))
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0],
+                    self.length[len(self.length)-1][1]+1))
                 self.food.respawn()
-                g.score += 1
+                _globalscore += 1
+
         elif self.dir == "WEST":
             next = (next[0]-1, next[1])
-            if ((next[0] == self.food.pos[0]) and (next[1] == self.food.pos[1])):
-                self.length.append((self.length[len(self.length)-1][0]-1,self.length[len(self.length)-1][1]))
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0]-1,
+                    self.length[len(self.length)-1][1]))
                 self.food.respawn()
-                g.score += 1
+                _globalscore += 1
+
         elif self.dir == "EAST":
             next = (next[0]+1, next[1])
-            if ((next[0] == self.food.pos[0]) and (next[1] == self.food.pos[1])):
-                self.length.append((self.length[len(self.length)-1][0]+1,self.length[len(self.length)-1][1]))
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0]+1,
+                    self.length[len(self.length)-1][1]))
                 self.food.respawn()
-                g.score += 1
+                _globalscore += 1
 
-        if g.bounds == True:
+        if _globalbounds == True:
             if next[1] < 0:
                 self.default()
             elif next[1] > 47:
@@ -105,7 +131,8 @@ class Snake():
 
             if len(self.length) > 2:
                 for i in self.length:
-                    if ((next[0] == i[0]) and (next[1] == i[1])):
+                    if ((next[0] == i[0])
+                        and (next[1] == i[1])):
                         self.default()
 
-        self.length.insert(0,next)
+        self.length.insert(0, next)
