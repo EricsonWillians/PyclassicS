@@ -35,6 +35,7 @@ class Food():
     def __init__(self):
 
         self.pos = [randrange(0, 48), randrange(0, 48)]
+        self.nourishment = 3
 
     def respawn(self):
 
