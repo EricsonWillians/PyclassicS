@@ -2,7 +2,7 @@
 
 ====================================================================
 
-PyclassicS 1.2 - Snake Game
+PyclassicS 1.2 - Snake Game %
 Copyright (C) <2014>  <Ericson Willians.>
 
 This program is free software: you can redistribute it and/or modify
