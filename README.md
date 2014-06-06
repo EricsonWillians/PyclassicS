@@ -3,21 +3,31 @@ PyclassicS
 
 Python Classic Snake is an open-source snake game written with Pygame.
 
-Improvements yet to be made
+
+Default Features
+=========
+
+- Grid-based collision and movement.
+- Increase / Decrease speed option.
+- Random-spawn food.
+- Bounds (Soon to be deprecated.)
+
+New Features
 ========================
 
-- A basic GUI.
-- SFX and Music.
-- GFX option (Graphics can be disabled in order to preserve the oldschool atmosphere.).
-- Choice between procedurally generated walls/levels or empty space.
-- Two-Player option.
-- Custom key assignment (Including Joystick).
+- 'Step-jump' (Implemented)
+- A basic GUI.  (To be implemented...)
+- SFX and Music. (To be implemented...)
+- GFX option (Graphics can be disabled in order to preserve the oldschool atmosphere.). (To be implemented...)
+- Choice between procedurally generated walls/levels or empty space. (To be implemented...)
+- Two-Player option. (To be implemented...)
+- Custom key assignment (Including Joystick). (To be implemented...)
 - Anything that might be interesting.
 
 Version
 =======
 
-1.1
+1.2
 
 License
 =======
