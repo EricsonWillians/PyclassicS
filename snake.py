@@ -32,125 +32,125 @@ import pygame
 
 class Snake():
 
-	def __init__(self, food):
+    def __init__(self, food):
 
-		self.speed = 16
-		self.size = 16
-		self.dir = _global.directions[0]
-		self.grid_index = []
-		self.real_pos = []
-		for i in range(0, 48):
-			self.grid_index.append(i)
-			self.real_pos.append(i*16)
-		self.grid_keys = dict(zip(self.grid_index,self.real_pos))
-		self.length = [
-					  [24, 24],
-					  [24, 24],
-		]
+        self.speed = 16
+        self.size = 16
+        self.dir = _global.directions[0]
+        self.grid_index = []
+        self.real_pos = []
+        for i in range(0, 48):
+            self.grid_index.append(i)
+            self.real_pos.append(i*16)
+        self.grid_keys = dict(zip(self.grid_index,self.real_pos))
+        self.length = [
+                      [24, 24],
+                      [24, 24],
+        ]
 
-		self.food = food
-		self.step = 1
+        self.food = food
+        self.step = 1
 
-	def draw(self):
+    def draw(self):
 
-		map(lambda tail: pygame.draw.rect(
-				_global._screen,
-				_global.colors.get("GAME"),
-				(self.grid_keys.get(tail[0]),
-				 self.grid_keys.get(tail[1]),
-				 self.size,self.size)),
-			[tail for tail in self.length])
+        map(lambda tail: pygame.draw.rect(
+                _global._screen,
+                _global.colors.get("GAME"),
+                (self.grid_keys.get(tail[0]),
+                 self.grid_keys.get(tail[1]),
+                 self.size,self.size)),
+            [tail for tail in self.length])
 
-	# Defaults the whole game when Death comes.
-	def default(self):
+    # Defaults the whole game when Death comes.
+    def default(self):
 
-		del self.length[:]
-		self.food.respawn()
-		_global.score = 0
-		print "GAME OVER!\n"*100
+        del self.length[:]
+        self.food.respawn()
+        _global.score = 0
+        print "GAME OVER!\n"*100
 
-	# An abstract method that makes the snake the snake.
-	def give_life(self):
+    # An abstract method that makes the snake the snake.
+    def give_life(self):
 
-		self.length.pop()
-		next = self.length[0]
+        self.length.pop()
+        next = self.length[0]
 
-		pygame.draw.rect(
-				_global._screen,
-				_global.colors.get("GAME"),
-			(self.grid_keys.get(self.food.pos[0]),
-			 self.grid_keys.get(self.food.pos[1]),self.size,self.size))
+        pygame.draw.rect(
+                _global._screen,
+                _global.colors.get("GAME"),
+            (self.grid_keys.get(self.food.pos[0]),
+             self.grid_keys.get(self.food.pos[1]),self.size,self.size))
 
-		self.draw()
-		print str(self.length).replace('[','').replace(']','').replace(', ','-'+str(len(self.length))+'-').replace('(','[').replace(')',']')
+        self.draw()
+        print str(self.length).replace('[','').replace(']','').replace(', ','-'+str(len(self.length))+'-').replace('(','[').replace(')',']')
 
-		if self.dir == "NORTH":
-			if pygame.key.get_pressed()[pygame.K_SPACE]:
-				next = (next[0], next[1]-self.step)
-			else:
-				next = (next[0], next[1]-1)
-			if ((next[0] == self.food.pos[0])
-					and (next[1] == self.food.pos[1])):
-				self.length.append((self.length[len(self.length)-1][0],
-					self.length[len(self.length)-1][1]-1))
-				self.food.respawn()
-				_global.score += 1
+        if self.dir == "NORTH":
+            if pygame.key.get_pressed()[pygame.K_SPACE]:
+                next = (next[0], next[1]-self.step)
+            else:
+                next = (next[0], next[1]-1)
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0],
+                    self.length[len(self.length)-1][1]-1))
+                self.food.respawn()
+                _global.score += 1
 
-		elif self.dir == "SOUTH":
-			if pygame.key.get_pressed()[pygame.K_SPACE]:
-				next = (next[0],next[1]+self.step)
-			else:
-				next = (next[0],next[1]+1)
-			if ((next[0] == self.food.pos[0])
-					and (next[1] == self.food.pos[1])):
-				self.length.append((self.length[len(self.length)-1][0],
-					self.length[len(self.length)-1][1]+1))
-				self.food.respawn()
-				_global.score += 1
+        elif self.dir == "SOUTH":
+            if pygame.key.get_pressed()[pygame.K_SPACE]:
+                next = (next[0],next[1]+self.step)
+            else:
+                next = (next[0],next[1]+1)
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0],
+                    self.length[len(self.length)-1][1]+1))
+                self.food.respawn()
+                _global.score += 1
 
-		elif self.dir == "WEST":
-			if pygame.key.get_pressed()[pygame.K_SPACE]:
-				next = (next[0]-self.step, next[1])
-			else:
-				next = (next[0]-1, next[1])
-			if ((next[0] == self.food.pos[0])
-					and (next[1] == self.food.pos[1])):
-				self.length.append((self.length[len(self.length)-1][0]-1,
-					self.length[len(self.length)-1][1]))
-				self.food.respawn()
-				_global.score += 1
+        elif self.dir == "WEST":
+            if pygame.key.get_pressed()[pygame.K_SPACE]:
+                next = (next[0]-self.step, next[1])
+            else:
+                next = (next[0]-1, next[1])
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0]-1,
+                    self.length[len(self.length)-1][1]))
+                self.food.respawn()
+                _global.score += 1
 
-		elif self.dir == "EAST":
-			if pygame.key.get_pressed()[pygame.K_SPACE]:
-				next = (next[0]+self.step, next[1])
-			else:
-				next = (next[0]+1, next[1])
-			if ((next[0] == self.food.pos[0])
-					and (next[1] == self.food.pos[1])):
-				self.length.append((self.length[len(self.length)-1][0]+1,
-					self.length[len(self.length)-1][1]))
-				self.food.respawn()
-				_global.score += 1
+        elif self.dir == "EAST":
+            if pygame.key.get_pressed()[pygame.K_SPACE]:
+                next = (next[0]+self.step, next[1])
+            else:
+                next = (next[0]+1, next[1])
+            if ((next[0] == self.food.pos[0])
+                    and (next[1] == self.food.pos[1])):
+                self.length.append((self.length[len(self.length)-1][0]+1,
+                    self.length[len(self.length)-1][1]))
+                self.food.respawn()
+                _global.score += 1
 
-		if _global.bounds == True:
-			if next[1] < 0:
-				self.default()
-			elif next[1] > 47:
-				self.default()
-			elif next[0] < 0:
-				self.default()
-			elif next[0] > 47:
-				self.default()
+        if _global.bounds == True:
+            if next[1] < 0:
+                self.default()
+            elif next[1] > 47:
+                self.default()
+            elif next[0] < 0:
+                self.default()
+            elif next[0] > 47:
+                self.default()
 
-			if len(self.length) > 2:
-				for i in self.length:
-					if ((next[0] == i[0])
-						and (next[1] == i[1])):
-						self.default()
-						
-			self.length.insert(0, next)
-			
-		if pygame.mouse.get_pressed()[0]:
-			self.step += 1
-		if pygame.mouse.get_pressed()[2]:
-			self.step -= 1
+            if len(self.length) > 2:
+                for i in self.length:
+                    if ((next[0] == i[0])
+                        and (next[1] == i[1])):
+                        self.default()
+
+            self.length.insert(0, next)
+
+        if pygame.mouse.get_pressed()[0]:
+            self.step += 1
+        if pygame.mouse.get_pressed()[2]:
+            self.step -= 1

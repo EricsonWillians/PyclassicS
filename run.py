@@ -39,137 +39,137 @@ from snake import Snake
 _snake = Snake(Food())
 
 while not _global.done:
-	
-	if pygame.key.get_pressed()[pygame.K_p] and pause == False:
-			pause = True
-			print "Paused Game."
 
-	elif pygame.key.get_pressed()[pygame.K_p] and pause == True:
-		pause = False
-		print "Game resumed..."
+    if pygame.key.get_pressed()[pygame.K_p] and pause == False:
+            pause = True
+            print "Paused Game."
 
-	if pygame.key.get_pressed()[pygame.K_F10]:
-		_global.screen = pygame.display.set_mode(
-							(_global.screen_size,
-							 _global.screen_size),
-							 pygame.FULLSCREEN)
-		fullscreen = True
+    elif pygame.key.get_pressed()[pygame.K_p] and pause == True:
+        pause = False
+        print "Game resumed..."
 
-	if pygame.key.get_pressed()[pygame.K_F11]:
-		_global.screen = pygame.display.set_mode((_global.screenSize,
-												  _global.screenSize))
-		fullscreen = False
+    if pygame.key.get_pressed()[pygame.K_F10]:
+        _global.screen = pygame.display.set_mode(
+                            (_global.screen_size,
+                             _global.screen_size),
+                             pygame.FULLSCREEN)
+        fullscreen = True
 
-	if (pygame.key.get_pressed()[pygame.K_UP]
-			or pygame.key.get_pressed()[pygame.K_w]):
-		_snake.dir = _global.directions[0]
+    if pygame.key.get_pressed()[pygame.K_F11]:
+        _global.screen = pygame.display.set_mode((_global.screenSize,
+                                                  _global.screenSize))
+        fullscreen = False
 
-	if (pygame.key.get_pressed()[pygame.K_DOWN]
-			or pygame.key.get_pressed()[pygame.K_s]):
-		_snake.dir = _global.directions[1]
+    if (pygame.key.get_pressed()[pygame.K_UP]
+            or pygame.key.get_pressed()[pygame.K_w]):
+        _snake.dir = _global.directions[0]
 
-	if (pygame.key.get_pressed()[pygame.K_LEFT]
-			or pygame.key.get_pressed()[pygame.K_a]):
-		_snake.dir = _global.directions[2]
+    if (pygame.key.get_pressed()[pygame.K_DOWN]
+            or pygame.key.get_pressed()[pygame.K_s]):
+        _snake.dir = _global.directions[1]
 
-	if (pygame.key.get_pressed()[pygame.K_RIGHT]
-			or pygame.key.get_pressed()[pygame.K_d]):
-		_snake.dir = _global.directions[3]
+    if (pygame.key.get_pressed()[pygame.K_LEFT]
+            or pygame.key.get_pressed()[pygame.K_a]):
+        _snake.dir = _global.directions[2]
 
-	if pygame.key.get_pressed()[pygame.K_KP_MINUS]:
-		_snake.speed /= 2
+    if (pygame.key.get_pressed()[pygame.K_RIGHT]
+            or pygame.key.get_pressed()[pygame.K_d]):
+        _snake.dir = _global.directions[3]
 
-	if pygame.key.get_pressed()[pygame.K_KP_PLUS]:
-		_snake.speed *= 2
+    if pygame.key.get_pressed()[pygame.K_KP_MINUS]:
+        _snake.speed /= 2
 
-	if pygame.key.get_pressed()[pygame.K_ESCAPE]:
-		_global.done = True
+    if pygame.key.get_pressed()[pygame.K_KP_PLUS]:
+        _snake.speed *= 2
 
-	if (pygame.key.get_pressed()[pygame.K_b]
-			and (_global.bounds == True)):
-		_global.bounds = False
+    if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+        _global.done = True
 
-	elif (pygame.key.get_pressed()[pygame.K_b]
-			and (_global.bounds == False)):
-		_global.bounds = True
+    if (pygame.key.get_pressed()[pygame.K_b]
+            and (_global.bounds == True)):
+        _global.bounds = False
 
-	for e in pygame.event.get():
-		if e.type == pygame.QUIT:
-			_global.done = True
+    elif (pygame.key.get_pressed()[pygame.K_b]
+            and (_global.bounds == False)):
+        _global.bounds = True
 
-	pygame.draw.rect(
-		_global._screen,
-		_global.colors.get("BG"),
-		(0,0,_global.screen_size,_global.screen_size))
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT:
+            _global.done = True
 
-	
-	if _global.pause == False:
-		try:
-			_snake.give_life()
-		except:
-			if _global.bounds == True:
-				_snake.length = [
-								[24, 24],
-								[24, 24],
-				]
-			else:
-				pass
+    pygame.draw.rect(
+        _global._screen,
+        _global.colors.get("BG"),
+        (0,0,_global.screen_size,_global.screen_size))
 
-	scoreText = _global._game_font.render("Score: " + str(_global.score),
-		True, _global.colors.get("GAME"))
-		
-	speedText = _global._game_font.render("Speed: " + str(_snake.speed), 
-		True, _global.colors.get("GAME"))
-	
-	if _global.bounds == True:
-		boundsText = _global._game_font.render("Bounds: ON", 
-						True, _global.colors.get("ON"))
-		_global._screen.blit(boundsText, (10, 50))
-		
-	elif _global.bounds == False:
-		boundsText = _global._game_font.render("Bounds: OFF", 
-			True, _global.colors.get("OFF"))
-		try:
-			coordinates = _global._game_font.render("x: " + 
-					str(_snake.length[len(_snake.length)-1][0]) + 
-					" " + 
-					"y: " + 
-					str(_snake.length[len(_snake.length)-1][1]), 
-				True, _global.colors.get("OFF"))
-		except IndexError, v:
-			print "IndexError:", v
-		_global._screen.blit(boundsText, (10, 50))
-		_global._screen.blit(coordinates, (690, 10))
-		
-	if _global.fullscreen == False:
-		fullscreenText = _global._game_font.render("Fullscreen: OFF", 
-			True, _global.colors.get("OFF"))
-		_global._screen.blit(fullscreenText, (10, 70))
-		
-	elif fullscreen == True:
-		fullscreenText = _global._game_font.render("Fullscreen: ON", 
-			True, _global.colors.get("ON"))
-		_global._screen.blit(fullscreenText, (10, 70))
-		
-	step_text = _global._game_font.render("Step: " + str(_snake.step), 
-			True, _global.colors.get("GAME"))
-	_global._screen.blit(step_text, (10, 90))
-	
-	positions = _global._game_font.render(str(sys.stdout())), 
-			True, _global.colors.get("GAME"))
-	_global._screen.blit(positions, (100, 100))
-	
-	keysText = _global._credit_font.render("Keys: ARROWS, WASD, KP +-, B, F10, F11.", 
-		True, _global.colors.get("GAME"))
-	creditText = _global._credit_font.render("Developed by Ericson Willians.", 
-		True, _global.colors.get("GAME"))
-	
-	_global._screen.blit(scoreText,(10,10))
-	_global._screen.blit(speedText,(10,30))
-	_global._screen.blit(keysText,(10,750))
-	_global._screen.blit(creditText,(620,750))
-	pygame.display.flip()
-	_global._clock.tick(_snake.speed)
+
+    if _global.pause == False:
+        try:
+            _snake.give_life()
+        except:
+            if _global.bounds == True:
+                _snake.length = [
+                                [24, 24],
+                                [24, 24],
+                ]
+            else:
+                pass
+
+    scoreText = _global._game_font.render("Score: " + str(_global.score),
+        True, _global.colors.get("GAME"))
+
+    speedText = _global._game_font.render("Speed: " + str(_snake.speed),
+        True, _global.colors.get("GAME"))
+
+    if _global.bounds == True:
+        boundsText = _global._game_font.render("Bounds: ON",
+                        True, _global.colors.get("ON"))
+        _global._screen.blit(boundsText, (10, 50))
+
+    elif _global.bounds == False:
+        boundsText = _global._game_font.render("Bounds: OFF",
+            True, _global.colors.get("OFF"))
+        try:
+            coordinates = _global._game_font.render("x: " +
+                    str(_snake.length[len(_snake.length)-1][0]) +
+                    " " +
+                    "y: " +
+                    str(_snake.length[len(_snake.length)-1][1]),
+                True, _global.colors.get("OFF"))
+        except IndexError, v:
+            print "IndexError:", v
+        _global._screen.blit(boundsText, (10, 50))
+        _global._screen.blit(coordinates, (690, 10))
+
+    if _global.fullscreen == False:
+        fullscreenText = _global._game_font.render("Fullscreen: OFF",
+            True, _global.colors.get("OFF"))
+        _global._screen.blit(fullscreenText, (10, 70))
+
+    elif fullscreen == True:
+        fullscreenText = _global._game_font.render("Fullscreen: ON",
+            True, _global.colors.get("ON"))
+        _global._screen.blit(fullscreenText, (10, 70))
+
+    step_text = _global._game_font.render("Step: " + str(_snake.step),
+            True, _global.colors.get("GAME"))
+    _global._screen.blit(step_text, (10, 90))
+
+    positions = _global._game_font.render(str(sys.stdout())),
+            True, _global.colors.get("GAME"))
+    _global._screen.blit(positions, (100, 100))
+
+    keysText = _global._credit_font.render("Keys: ARROWS, WASD, KP +-, B, F10, F11.",
+        True, _global.colors.get("GAME"))
+    creditText = _global._credit_font.render("Developed by Ericson Willians.",
+        True, _global.colors.get("GAME"))
+
+    _global._screen.blit(scoreText,(10,10))
+    _global._screen.blit(speedText,(10,30))
+    _global._screen.blit(keysText,(10,750))
+    _global._screen.blit(creditText,(620,750))
+    pygame.display.flip()
+    _global._clock.tick(_snake.speed)
 
 print "Exiting..."
 pygame.quit()
