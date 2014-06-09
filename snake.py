@@ -85,7 +85,7 @@ class Snake():
         print str(self.length).replace('[','').replace(']','').replace(', ','-'+str(len(self.length))+'-').replace('(','[').replace(')',']')
 
         if self.dir == "NORTH":
-            if pygame.key.get_pressed()[pygame.K_SPACE]:
+            if pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_KP0]:
                 next = (next[0], next[1]-self.step)
             else:
                 next = (next[0], next[1]-1)
@@ -97,7 +97,7 @@ class Snake():
                 _global.score += 1
 
         elif self.dir == "SOUTH":
-            if pygame.key.get_pressed()[pygame.K_SPACE]:
+            if pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_KP0]:
                 next = (next[0],next[1]+self.step)
             else:
                 next = (next[0],next[1]+1)
@@ -109,7 +109,7 @@ class Snake():
                 _global.score += 1
 
         elif self.dir == "WEST":
-            if pygame.key.get_pressed()[pygame.K_SPACE]:
+            if pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_KP0]:
                 next = (next[0]-self.step, next[1])
             else:
                 next = (next[0]-1, next[1])
@@ -121,7 +121,7 @@ class Snake():
                 _global.score += 1
 
         elif self.dir == "EAST":
-            if pygame.key.get_pressed()[pygame.K_SPACE]:
+            if pygame.key.get_pressed()[pygame.K_SPACE] or pygame.key.get_pressed()[pygame.K_KP0]:
                 next = (next[0]+self.step, next[1])
             else:
                 next = (next[0]+1, next[1])
@@ -150,7 +150,21 @@ class Snake():
 
             self.length.insert(0, next)
 
-        if pygame.mouse.get_pressed()[0]:
-            self.step += 1
-        if pygame.mouse.get_pressed()[2]:
-            self.step -= 1
+        if pygame.key.get_pressed()[pygame.K_KP1]:
+            self.step = 1
+        if pygame.key.get_pressed()[pygame.K_KP2]:
+            self.step = 2
+        if pygame.key.get_pressed()[pygame.K_KP3]:
+            self.step = 3
+        if pygame.key.get_pressed()[pygame.K_KP4]:
+            self.step = 4
+        if pygame.key.get_pressed()[pygame.K_KP5]:
+            self.step = 5
+        if pygame.key.get_pressed()[pygame.K_KP6]:
+            self.step = 6
+        if pygame.key.get_pressed()[pygame.K_KP7]:
+            self.step = 7
+        if pygame.key.get_pressed()[pygame.K_KP8]:
+            self.step = 8
+        if pygame.key.get_pressed()[pygame.K_KP9]:
+            self.step = 9
